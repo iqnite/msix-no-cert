@@ -4,6 +4,15 @@ Normally, Microsoft package installers (MSIX) require a certificate signed by an
 
 This PowerShell script works around the issue by installing a self-signed certificate (which is free) to the user's machine and running the package installer afterwards.
 
+## Limitations
+
+Before using this tool, consider the following:
+
+- The user will need to extract a ZIP archive before installing. A standalone EXE installer is being worked on.
+- Windows Security will show security warnings when trying to run the installer. However, these can be easily clicked away by the user.
+
+If you are okay with these, read on!
+
 ## Prerequisites
 
 To use this tool, you will need:
@@ -12,7 +21,7 @@ To use this tool, you will need:
 - A self-signed certificate (`.cer` file)
 - An MSIX installer
 
-The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template by right-clicking on the project and selecting "Package and publish..." > "Create application packages...".
+The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template.To get them, right-click on the project and select "Package and publish..." > "Create application packages...".
 
 ## Usage
 
@@ -42,7 +51,7 @@ If any error occur during the installer creation, ensure that:
 - 7-Zip is installed on your system and located at `%ProgramFiles%\7-Zip\7z.exe`
 - all relative paths (such as paths to `assets`) are correct
 - the `installer` folder contains `app.msix` and `app.cer`
-- the app icon is has the `.ico` file extension
+- the app icon has the `.ico` file extension
 
 ## Technical description
 
