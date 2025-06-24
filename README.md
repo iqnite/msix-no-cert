@@ -2,10 +2,6 @@
 
 A small PowerShell utility that allows creating installers for MSIX files without an official certificate.
 
-## Background
-
-See [this issue](https://github.com/microsoft/msix-packaging/issues/332).
-
 ## Prerequisites
 
 To use this tool, you will need:
@@ -45,3 +41,21 @@ If any error occur during the installer creation, ensure that:
 - all relative paths (such as paths to `assets`) are correct
 - the `installer` folder contains `app.msix` and `app.cer`
 - the app icon is has the `.ico` file extension
+
+## How it works
+
+Normally, Microsoft package installers (MSIX) require a certificate signed by an official certificate authority, which can cost up to 500$ per year. For further details, see [this issue](https://github.com/microsoft/msix-packaging/issues/332).
+
+This program works around this issue by installing a self-signed certificate (which is free) to the user's machine and running the package installer afterwards.
+
+```txt
++-------------------+              +----------------------+
+|   installer.zip   |              | create_installer.ps1 |<-------------------[assets]
+|                   |              |                      |
+|   [install.exe]<--+--------------+-------{PS2EXE}-------+--------------------[install.ps1]
+|   [app.cer]       |              |                      |                     V         V   
+|   [app.msix]      |<-------------+-------{7-Zip}--------+-----------------[app.cer]+[app.msix]
++-------------------+              +----------------------+
+```
+
+`install.ps1` is a PowerShell script that first installs `app.cer` with administrator permissions and then launches `app.msix` for the user to install. To allow users to install the app without needing to run scripts, `create_installer.ps1` first converts the installation script to an executable using the `installer_config.json`, and then puts the newly created `install.exe`, the certificate, and the MSIX package in a ZIP archive.
