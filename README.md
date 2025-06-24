@@ -1,6 +1,8 @@
-# Certificate-less MSIX package creation tool
+# Self-signed MSIX package creation tool
 
-A small PowerShell utility that allows creating installers for MSIX files without an official certificate.
+Normally, Microsoft package installers (MSIX) require a certificate signed by an official certificate authority, which can cost up to 500$/year. For further details, see [this issue](https://github.com/microsoft/msix-packaging/issues/332).
+
+This PowerShell script works around the issue by installing a self-signed certificate (which is free) to the user's machine and running the package installer afterwards.
 
 ## Prerequisites
 
@@ -42,11 +44,7 @@ If any error occur during the installer creation, ensure that:
 - the `installer` folder contains `app.msix` and `app.cer`
 - the app icon is has the `.ico` file extension
 
-## How it works
-
-Normally, Microsoft package installers (MSIX) require a certificate signed by an official certificate authority, which can cost up to 500$ per year. For further details, see [this issue](https://github.com/microsoft/msix-packaging/issues/332).
-
-This program works around this issue by installing a self-signed certificate (which is free) to the user's machine and running the package installer afterwards.
+## Technical description
 
 ```txt
 +-------------------+              +----------------------+
