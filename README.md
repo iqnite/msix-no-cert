@@ -51,7 +51,7 @@ If any error occur during the installer creation, ensure that:
 |   installer.zip   |              | create_installer.ps1 |<-------------------[assets]
 |                   |              |                      |
 |   [install.exe]<--+--------------+-------{PS2EXE}-------+--------------------[install.ps1]
-|   [app.cer]       |              |                      |                     V         V   
+|   [app.cer]       |              |                      |                     V         V
 |   [app.msix]      |<-------------+-------{7-Zip}--------+-----------------[app.cer]+[app.msix]
 +-------------------+              +----------------------+
 ```
