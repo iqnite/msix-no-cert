@@ -1,0 +1,5 @@
+*.zip
+installer/*
+!installer/README.*
+assets/*
+!assets/installer_config.json.example

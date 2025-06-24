@@ -1,0 +1,7 @@
+{
+  "OutputFile": "installer.zip",
+  "Title": "My App Installer",
+  "Description": "Installs My App, a program that does something useful.",
+  "IconFile": "assets/my_app.ico",
+  "Version": "1.0.0"
+}
