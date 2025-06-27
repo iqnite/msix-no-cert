@@ -1,5 +1,6 @@
 $certPath = "app.cer"
 $msixPath = "app.msix"
+$appinstallerPath = "app.appinstaller"
 
 $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certPath)
 
@@ -8,4 +9,9 @@ $store.Open("ReadWrite")
 $store.Add($cert)
 $store.Close()
 
-Start-Process -FilePath $msixPath
+if (Test-Path $appinstallerPath) {
+    Start-Process -FilePath $appinstallerPath
+}
+elseif (Test-Path $msixPath) {
+    Start-Process -FilePath $msixPath
+}

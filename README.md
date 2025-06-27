@@ -19,7 +19,7 @@ To use this tool, you will need:
 
 - [7-Zip](https://www.7-zip.org/)
 - A self-signed certificate (`.cer` file)
-- An MSIX installer
+- An MSIX or AppInstaller file
 
 The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template.To get them, right-click on the project and select "Package and publish..." > "Create application packages...".
 
