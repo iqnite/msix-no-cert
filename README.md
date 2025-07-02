@@ -9,7 +9,7 @@ This PowerShell script works around the issue by installing a self-signed certif
 Before using this tool, consider the following:
 
 - The user will need to extract a ZIP archive before installing. A standalone EXE installer is being worked on.
-- Windows Security will show security warnings when trying to run the installer. However, these can be easily clicked away by the user.
+- Some antivirus software might show security warnings when trying to run the installer. However, these can be easily clicked away by the user.
 
 If you are okay with these, read on!
 
@@ -21,7 +21,7 @@ To use this tool, you will need:
 - A self-signed certificate (`.cer` file)
 - An MSIX or AppInstaller file
 
-The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template.To get them, right-click on the project and select "Package and publish..." > "Create application packages...".
+The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template. To get them, select "Project" > "Package and publish" > "Create application packages...".
 
 ## Usage
 
