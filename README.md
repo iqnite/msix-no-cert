@@ -19,11 +19,15 @@ To use this tool, you will need:
 
 - [7-Zip](https://www.7-zip.org/)
 - A self-signed certificate (`.cer` file)
-- An MSIX or AppInstaller file
+- An app installer file (`.msix` or `.appinstaller`)
 
-The last 2 are generated automatically if you are using Visual Studio with the WinUI 3 template. To get them, select "Project" > "Package and publish" > "Create application packages...".
+> [!TIP]
+> The certificate and installer files are generated automatically if you are using Visual Studio with the WinUI 3 template. To get them, select "Project" > "Package and publish" > "Create application packages...".
 
 ## Usage
+
+> [!NOTE]
+> The program supports both `.msix` and `.appinstaller` files. In this guide, only MSIX will be mentioned for simplicity, but you can think of MSIX as a synonym for AppInstaller. 
 
 ### Preparing the installer
 
