@@ -27,7 +27,7 @@ To use this tool, you will need:
 ## Usage
 
 > [!NOTE]
-> The program supports both `.msix` and `.appinstaller` files. In this guide, only MSIX will be mentioned for simplicity, but you can think of MSIX as a synonym for AppInstaller. 
+> The program supports both `.msix` and `.appinstaller` files. In this guide, only MSIX will be mentioned for simplicity, but everything that works with MSIX applies to AppInstaller as well.
 
 ### Preparing the installer
 
