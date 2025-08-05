@@ -50,7 +50,7 @@ If you cannot start `create_installer.ps1`, try running the following command in
 pwsh .\create_installer.ps1
 ```
 
-If any error occur during the installer creation, ensure that:
+If any errors occur during the installer creation, ensure that:
 
 - 7-Zip is installed on your system and located at `%ProgramFiles%\7-Zip\7z.exe`
 - all relative paths (such as paths to `assets`) are correct
