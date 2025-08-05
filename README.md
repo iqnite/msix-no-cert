@@ -33,10 +33,10 @@ To use this tool, you will need:
 
 First, copy your `.msix` and `.cer` file to the `installer` folder, and rename them to `app.msix` and `app.cer`, respectively.
 
+Next, in the `assets` folder, copy `installer_config.json.example` and rename the new file to `installer_config.json`. Replace the sample data in the JSON with your app's information.
+
 > [!IMPORTANT]
 > Include any files that are required during the installation process (such as additional installers, certificates, and dependencies) in the `installer` folder. Files that are required to create the installer, but not during the installation process (such as the installer icon) should be included in the `assets` folder instead.
-
-Next, in the `assets` folder, copy `installer_config.json.example` and rename the new file to `installer_config.json`. Replace the sample data in the JSON with your app's information.
 
 ### Creating the installer
 
