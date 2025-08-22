@@ -1,5 +1,6 @@
+[CmdletBinding(PositionalBinding = $false)]
 param (
-    [array]$inputFiles,
+    [Parameter(ValueFromRemainingArguments = $true)][string[]]$inputFiles,
     [string]$config,
     [Alias("o")][string]$output,
     [Alias("c")][string]$cert,
@@ -47,8 +48,29 @@ else {
     }
 }
 
+New-Item -ItemType Directory -Path ".\installer" -Force | Out-Null
+
+$embeddedInstallScript = @'
+$scriptPath = $PSScriptRoot
+
+$certPath = Get-ChildItem -Path $scriptPath -Filter *.cer | Select-Object -First 1 -ExpandProperty FullName
+$installerPath = Get-ChildItem -Path $scriptPath -Filter installer.* | Select-Object -First 1 -ExpandProperty FullName
+
+$cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certPath)
+
+$store = New-Object System.Security.Cryptography.X509Certificates.X509Store("TrustedPeople", "LocalMachine")
+$store.Open("ReadWrite")
+$store.Add($cert)
+$store.Close()
+
+Start-Process -FilePath $installerPath
+'@
+
+$installSourcePath = Join-Path $env:TEMP "yt-dlp-ui.install.ps1"
+Set-Content -Path $installSourcePath -Value $embeddedInstallScript -Encoding UTF8
+
 Invoke-PS2EXE `
-    -InputFile ".\install.ps1" `
+    -InputFile $installSourcePath `
     -OutputFile ".\installer\install.exe" `
     -IconFile $configObj.icon `
     -title $configObj.title `
@@ -86,5 +108,7 @@ for ($i = 0; $i -lt $configObj.input.count; $i++) {
 
     Write-Host "Archive created at $zipPath" -ForegroundColor Blue
 }
+
+Remove-Item $installSourcePath -ErrorAction SilentlyContinue
 
 Write-Host "$($configObj.input.count) installers created." -ForegroundColor Green

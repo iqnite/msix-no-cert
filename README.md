@@ -19,14 +19,57 @@ To use this tool, you will need:
 
 - [7-Zip](https://www.7-zip.org/)
 - A self-signed certificate (`.cer` file)
-- An app installer file (`.msix` or `.appinstaller`)
+- An app installer file (`.msix`, `.appinstaller`, `.exe`, ...)
 
 > [!TIP]
 > The certificate and installer files are generated automatically if you are using Visual Studio with the WinUI 3 template. To get them, select "Project" > "Package and publish" > "Create application packages...".
 
 ## Usage
 
-Run `create_installer.ps1` to list the available options.
+To create an installer, run a command in the following format:
+
+```powershell
+.\create_installer.ps1 <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
+```
+
+Options:
+
+- `-o`,  `-output`         Output path for the installer archives.
+- `-c`,  `-cert`           Path to the certificate file.
+- `-t`,  `-title`          Title of the installer.
+- `-d`,  `-description`    Description of the installer.
+- `-i`,  `-icon`           Path to the icon file for the installer.
+- `-v`,  `-version`        Version number for the installer.
+- `-h`,  `-help`           Display this help message.
+- `-config`                Path to a JSON configuration file, to be used instead of the above options.
+
+Example:
+
+```powershell
+.\create_installer.ps1 installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my_app_icon.ico -v '1.0.0'"
+```
+
+### JSON Options
+
+You can create a JSON configuration file with the command options, so you don't have to manually enter them every time.
+
+```json
+{
+  "input": ["installer.msix", "installer.appinstaller"],
+  "output": "output",
+  "cert": "certificate.cer",
+  "title": "My Cool App Installer",
+  "description": "Installs My Cool App, an app that does something.",
+  "icon": "my_app_icon.ico",
+  "version": "1.0.0"
+}
+```
+
+You can then use the following command to create the installer, based on your JSON file:
+
+```powershell
+.\create_installer.ps1 -config <path_to_json_file.json>
+```
 
 ## Troubleshooting
 
@@ -39,20 +82,7 @@ pwsh .\create_installer.ps1
 If any errors occur during the installer creation, ensure that:
 
 - 7-Zip is installed on your system and located at `%ProgramFiles%\7-Zip\7z.exe`
-- all relative paths (such as paths to `assets`) are correct
-- the `installer` folder contains `app.msix` and `app.cer`
+- all relative paths are correct
+- you have passed the `-cert`, `-output`, and installer parameters correctly
+- the certificate is in `.cer` format
 - the app icon has the `.ico` file extension
-
-## Technical description
-
-```txt
-+-------------------+              +----------------------+
-|   installer.zip   |              | create_installer.ps1 |<-------------------[assets]
-|                   |              |                      |
-|   [install.exe]<--+--------------+-------{PS2EXE}-------+--------------------[install.ps1]
-|   [app.cer]       |              |                      |                     V         V
-|   [app.msix]      |<-------------+-------{7-Zip}--------+-----------------[app.cer]+[app.msix]
-+-------------------+              +----------------------+
-```
-
-`install.ps1` is a PowerShell script that first installs `app.cer` with administrator permissions and then launches `app.msix` for the user to install. To allow users to install the app without needing to run scripts, `create_installer.ps1` first converts the installation script to an executable using the `installer_config.json`, and then puts the newly created `install.exe`, the certificate, and the MSIX package in a ZIP archive.
