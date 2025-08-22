@@ -1,8 +1,8 @@
 param (
     [array]$inputFiles,
-    [Alias("c")][string]$config,
+    [string]$config,
     [Alias("o")][string]$output,
-    [Alias("e")][string]$cert,
+    [Alias("c")][string]$cert,
     [Alias("t")][string]$title,
     [Alias("d")][string]$description,
     [Alias("i")][string]$icon,
@@ -11,10 +11,9 @@ param (
 )
 
 if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
-    Write-Host "Usage: .\create_installer.ps1 <installer.msix installer.appinstaller ...> [-config <config.json>] [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
+    Write-Host "Usage: .\create_installer.ps1 <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Options:"
-    Write-Host "  -co, -config         Path to a JSON configuration file."
     Write-Host "  -o,  -output         Output path for the installer archives."
     Write-Host "  -c,  -cert           Path to the certificate file."
     Write-Host "  -t,  -title          Title of the installer."
@@ -22,6 +21,7 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     Write-Host "  -i,  -icon           Path to the icon file for the installer."
     Write-Host "  -v,  -version        Version number for the installer."
     Write-Host "  -h,  -help           Display this help message."
+    Write-Host "       -config         Path to a JSON configuration file, to be used instead of the above options."
     Write-Host ""
     Write-Host "Example:"
     Write-Host "  .\create_installer.ps1 installer.msix installer.appinstaller -o output -c certificate.cer -t 'Installer Title' -d 'Installer Description' -i icon.ico -v '1.0.0'"
