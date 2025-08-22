@@ -1,6 +1,7 @@
-$certPath = "app.cer"
-$msixPath = "app.msix"
-$appinstallerPath = "app.appinstaller"
+$scriptPath = $PSScriptRoot
+
+$certPath = Get-ChildItem -Path $scriptPath -Filter *.cer | Select-Object -First 1 -ExpandProperty FullName
+$installerPath = Get-ChildItem -Path $scriptPath -Filter installer.* | Select-Object -First 1 -ExpandProperty FullName
 
 $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certPath)
 
@@ -9,9 +10,4 @@ $store.Open("ReadWrite")
 $store.Add($cert)
 $store.Close()
 
-if (Test-Path $appinstallerPath) {
-    Start-Process -FilePath $appinstallerPath
-}
-elseif (Test-Path $msixPath) {
-    Start-Process -FilePath $msixPath
-}
+Start-Process -FilePath $installerPath

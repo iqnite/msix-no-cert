@@ -26,21 +26,7 @@ To use this tool, you will need:
 
 ## Usage
 
-> [!NOTE]
-> The program supports both `.msix` and `.appinstaller` files. In this guide, only MSIX will be mentioned for simplicity, but everything that works with MSIX applies to AppInstaller as well.
-
-### Preparing the installer
-
-First, copy your `.msix` and `.cer` file to the `installer` folder, and rename them to `app.msix` and `app.cer`, respectively.
-
-Next, in the `assets` folder, copy `installer_config.json.example` and rename the new file to `installer_config.json`. Replace the sample data in the JSON with your app's information.
-
-> [!IMPORTANT]
-> Include any files that are required during the installation process (such as additional installers, certificates, and dependencies) in the `installer` folder. Files that are required to create the installer, but not during the installation process (such as the installer icon) should be included in the `assets` folder instead.
-
-### Creating the installer
-
-Now that the initial setup is complete, run `create_installer.ps1`. It will create a ZIP archive that can be distributed to your users!
+Run `create_installer.ps1` to list the available options.
 
 ## Troubleshooting
 
