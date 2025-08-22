@@ -29,7 +29,7 @@ To use this tool, you will need:
 To create an installer, run a command in the following format:
 
 ```powershell
-.\create_installer.ps1 <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
+create_installer.exe <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
 ```
 
 Options:
@@ -46,7 +46,7 @@ Options:
 Example:
 
 ```powershell
-.\create_installer.ps1 installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my_app_icon.ico -v '1.0.0'"
+create_installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my_app_icon.ico -v '1.0.0'"
 ```
 
 ### JSON Options
@@ -68,16 +68,10 @@ You can create a JSON configuration file with the command options, so you don't 
 You can then use the following command to create the installer, based on your JSON file:
 
 ```powershell
-.\create_installer.ps1 -config <path_to_json_file.json>
+create_installer.exe -config <path_to_json_file.json>
 ```
 
 ## Troubleshooting
-
-If you cannot start `create_installer.ps1`, try running the following command instead:
-
-```powershell
-pwsh .\create_installer.ps1
-```
 
 If any errors occur during the installer creation, ensure that:
 
