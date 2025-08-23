@@ -29,24 +29,24 @@ To use this tool, you will need:
 To create an installer, run a command in the following format:
 
 ```powershell
-create_installer.exe <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
+create-installer.exe <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
 ```
 
 Options:
 
-- `-o`,  `-output`         Output path for the installer archives.
-- `-c`,  `-cert`           Path to the certificate file.
-- `-t`,  `-title`          Title of the installer.
-- `-d`,  `-description`    Description of the installer.
-- `-i`,  `-icon`           Path to the icon file for the installer.
-- `-v`,  `-version`        Version number for the installer.
-- `-h`,  `-help`           Display this help message.
-- `-config`                Path to a JSON configuration file, to be used instead of the above options.
+- `-o`, `-output` Output path for the installer archives.
+- `-c`, `-cert` Path to the certificate file.
+- `-t`, `-title` Title of the installer.
+- `-d`, `-description` Description of the installer.
+- `-i`, `-icon` Path to the icon file for the installer.
+- `-v`, `-version` Version number for the installer.
+- `-h`, `-help` Display this help message.
+- `-config` Path to a JSON configuration file, to be used instead of the above options.
 
 Example:
 
 ```powershell
-create_installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my_app_icon.ico -v '1.0.0'"
+create-installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my-app-icon.ico -v '1.0.0'"
 ```
 
 ### JSON Options
@@ -60,7 +60,7 @@ You can create a JSON configuration file with the command options, so you don't 
   "cert": "certificate.cer",
   "title": "My Cool App Installer",
   "description": "Installs My Cool App, an app that does something.",
-  "icon": "my_app_icon.ico",
+  "icon": "my-app-icon.ico",
   "version": "1.0.0"
 }
 ```
@@ -68,7 +68,7 @@ You can create a JSON configuration file with the command options, so you don't 
 You can then use the following command to create the installer, based on your JSON file:
 
 ```powershell
-create_installer.exe -config <path_to_json_file.json>
+create-installer.exe -config <path-to-json-file.json>
 ```
 
 ## Troubleshooting

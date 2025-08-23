@@ -12,7 +12,7 @@ param (
 )
 
 if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
-    Write-Host "Usage: create_installer.exe <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
+    Write-Host "Usage: create-installer.exe <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -o,  -output         Output path for the installer archives."
@@ -25,7 +25,7 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     Write-Host "       -config         Path to a JSON configuration file, to be used instead of the above options."
     Write-Host ""
     Write-Host "Example:"
-    Write-Host "  create_installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'Installer Title' -d 'Installer Description' -i icon.ico -v '1.0.0'"
+    Write-Host "  create-installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'Installer Title' -d 'Installer Description' -i icon.ico -v '1.0.0'"
     exit
 }
 
@@ -48,8 +48,6 @@ else {
     }
 }
 
-New-Item -ItemType Directory -Path ".\installer" -Force | Out-Null
-
 $embeddedInstallScript = @'
 $scriptPath = $PSScriptRoot
 
@@ -66,12 +64,16 @@ $store.Close()
 Start-Process -FilePath $installerPath
 '@
 
+$workingDir = Get-Location
+$tempDir = Join-Path $env:TEMP "msix-no-cert-installer"
+
 $installSourcePath = Join-Path $env:TEMP "msix-no-cert.install.ps1"
+$installOutputPath = Join-Path $env:TEMP "msix-no-cert.install.exe"
 Set-Content -Path $installSourcePath -Value $embeddedInstallScript -Encoding UTF8
 
 Invoke-PS2EXE `
     -InputFile $installSourcePath `
-    -OutputFile ".\installer\install.exe" `
+    -OutputFile $installOutputPath `
     -IconFile $configObj.icon `
     -title $configObj.title `
     -description $configObj.description `
@@ -82,25 +84,30 @@ Invoke-PS2EXE `
     
 $7zipPath = "${env:ProgramFiles}\7-Zip\7z.exe"
 
-if ($configObj.cert) {
-    Copy-Item $configObj.cert "installer\certificate.cer" -Force
-}
-
 if (-not (Test-Path $7zipPath)) {
     Write-Host "7-Zip not found. Please install 7-Zip to continue." -BackgroundColor Red
     exit
 }
 
 for ($i = 0; $i -lt $configObj.input.count; $i++) {
+    Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Path $tempDir -Force
+    Copy-Item $installOutputPath (Join-Path $tempDir "install.exe") -Force
+    if ($configObj.cert) {
+        Copy-Item $configObj.cert (Join-Path $tempDir "certificate.cer") -Force
+    }
+
     $zipPath = Join-Path $configObj.output "$(Split-Path $configObj.input[$i] -Leaf).zip"
     Write-Host "Creating archive for $($configObj.input[$i]) at $zipPath" -ForegroundColor Cyan
     $fileName = Split-Path $configObj.input[$i] -Leaf
     $extension = [System.IO.Path]::GetExtension($fileName)
-    Copy-Item $configObj.input[$i] "installer\installer$extension" -Force
+    
+    Copy-Item $configObj.input[$i] (Join-Path $tempDir "installer$extension") -Force
     Remove-Item $zipPath -ErrorAction SilentlyContinue
-    Push-Location "installer"
+
+    Push-Location $tempDir
     try {
-        & $7zipPath a -tzip (Join-Path ".." $zipPath) "*"
+        & $7zipPath a -tzip (Join-Path $workingDir $zipPath) "*"
     }
     finally {
         Pop-Location
