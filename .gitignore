@@ -1,5 +1,1 @@
-*.zip
-installer/*
-!installer/README.*
 custom/*
-!custom/README.*
