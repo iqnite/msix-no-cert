@@ -46,7 +46,7 @@ catch {
     }
     catch {
         Write-Host "PS2EXE is not installed. Please run this program as an administrator or install PS2EXE with the following command:" -ForegroundColor Red
-        Write-Host "Install-Module -Name ps2exe -Scope CurrentUser -Force" -ForegroundColor Red
+        Write-Host "Install-Module -Name ps2exe -Scope CurrentUser -Force -RequiredVersion 1.0.17" -ForegroundColor Red
         exit
     }
 }
