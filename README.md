@@ -10,6 +10,10 @@ The Microsoft Store allows individuals to publish and certify apps for free. If 
 
 If you decide to use this tool, be aware that some antivirus software, such as Windows SmartScreen, might show security warnings when trying to run the installer. While the user can usually bypass these warnings by choosing to run the installer anyway, it is important to inform your users about this possibility beforehand to avoid confusion or mistrust. Also, it will require administrator privileges to install the certificate, which might not be suitable for all users.
 
+## Credits
+
+This tool utilizes PS2EXE by Markus Scholtes to convert PowerShell scripts into executable files. For more information, visit the [PS2EXE GitHub repository](https://github.com/MScholtes/PS2EXE).
+
 ## Usage
 
 To create an installer, run a command in the following format:
