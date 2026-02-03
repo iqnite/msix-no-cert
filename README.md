@@ -4,25 +4,11 @@ Normally, Microsoft package installers (MSIX) require a certificate signed by an
 
 This PowerShell script works around the issue by installing a self-signed certificate (which is free) to the user's machine and running the package installer afterwards.
 
-## Limitations
+## Before you begin
 
-Before using this tool, consider the following:
+The Microsoft Store allows individuals to publish and certify apps for free. If you are eligible, consider [publishing your app through the Microsoft Store](https://storedeveloper.microsoft.com/) instead of using this tool, as it provides a more secure and trusted installation experience.
 
-- The user will need to extract a ZIP archive before installing. A standalone EXE installer is being worked on.
-- Some antivirus software might show security warnings when trying to run the installer. However, these can be easily clicked away by the user.
-
-If you are okay with these, read on!
-
-## Prerequisites
-
-To use this tool, you will need:
-
-- [7-Zip](https://www.7-zip.org/)
-- A self-signed certificate (`.cer` file)
-- An app installer file (`.msix`, `.appinstaller`, `.exe`, ...)
-
-> [!TIP]
-> The certificate and installer files are generated automatically if you are using Visual Studio with the WinUI 3 template. To get them, select "Project" > "Package and publish" > "Create application packages...".
+If you decide to use this tool, be aware that some antivirus software, such as Windows SmartScreen, might show security warnings when trying to run the installer. While the user can usually bypass these warnings by choosing to run the installer anyway, it is important to inform your users about this possibility beforehand to avoid confusion or mistrust. Also, it will require administrator privileges to install the certificate, which might not be suitable for all users.
 
 ## Usage
 
@@ -75,7 +61,6 @@ You can then use the following command to create the installer, based on your JS
 
 If any errors occur during the installer creation, ensure that:
 
-- 7-Zip is installed on your system and located at `%ProgramFiles%\7-Zip\7z.exe`
 - all relative paths are correct
 - you have passed the `-cert`, `-output`, and installer parameters correctly
 - the certificate is in `.cer` format
