@@ -65,6 +65,7 @@ You can then use the following command to create the installer, based on your JS
 
 If any errors occur during the installer creation, ensure that:
 
+- PS2EXE is installed
 - all relative paths are correct
 - you have passed the `-cert`, `-output`, and installer parameters correctly
 - the certificate is in `.cer` format
