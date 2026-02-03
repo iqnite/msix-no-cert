@@ -13,7 +13,7 @@ param (
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "Self-signed MSIX Packager" -ForegroundColor Cyan
+Write-Host "Self-signed MSIX Package Creation Tool" -ForegroundColor Cyan
 Write-Host "Version 2.2.0" -ForegroundColor Cyan
 
 $scriptName = ".\msix-no-cert.exe"
@@ -37,7 +37,7 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
 }
 
 if (-not (Get-Module -ListAvailable -Name ps2exe)) {
-    Install-Module -Name PS2EXE -Scope CurrentUser -Force
+    Install-Module -Name ps2exe -Scope CurrentUser -Force
 }
 
 if ($config) {
