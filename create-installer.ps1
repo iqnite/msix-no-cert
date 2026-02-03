@@ -36,8 +36,19 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     exit
 }
 
-if (-not (Get-Module -ListAvailable -Name ps2exe)) {
-    Install-Module -Name ps2exe -Scope CurrentUser -Force
+try {
+    Import-Module -Name ps2exe
+}
+catch {
+    try {
+        Import-Module -Name PowerShellGet -Force -ErrorAction SilentlyContinue
+        Install-Module -Name ps2exe -Scope CurrentUser -Force -RequiredVersion 1.0.17
+    }
+    catch {
+        Write-Host "PS2EXE is not installed. Please run this program as an administrator or install PS2EXE with the following command:" -ForegroundColor Red
+        Write-Host "Install-Module -Name ps2exe -Scope CurrentUser -Force" -ForegroundColor Red
+        exit
+    }
 }
 
 if ($config) {
