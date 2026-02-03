@@ -12,9 +12,14 @@ param (
 )
 
 $ErrorActionPreference = "Stop"
-    
+
+Write-Host "Self-signed MSIX Packager" -ForegroundColor Cyan
+Write-Host "Version 2.2.0" -ForegroundColor Cyan
+
+$scriptName = ".\msix-no-cert.exe"
+
 if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
-    Write-Host "Usage: create-installer.exe <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
+    Write-Host "Usage: $scriptName <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -o,  -output         Output path for the installer archives."
@@ -27,7 +32,7 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     Write-Host "       -config         Path to a JSON configuration file, to be used instead of the above options."
     Write-Host ""
     Write-Host "Example:"
-    Write-Host "  create-installer.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'Installer Title' -d 'Installer Description' -i icon.ico -v '1.0.0'"
+    Write-Host "  $scriptName installer.msix installer.appinstaller -o output -c certificate.cer -t 'Installer Title' -d 'Installer Description' -i icon.ico -v '1.0.0'"
     exit
 }
 
