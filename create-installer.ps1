@@ -11,6 +11,8 @@ param (
     [Alias("h")][switch]$help
 )
 
+$ErrorActionPreference = "Stop"
+    
 if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     Write-Host "Usage: create-installer.exe <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
     Write-Host ""
