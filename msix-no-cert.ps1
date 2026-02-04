@@ -17,7 +17,7 @@
 
 .PROJECTURI https://github.com/iqnite/msix-no-cert/
 
-.ICONURI 
+.ICONURI https://github.com/iqnite/msix-no-cert/blob/main/assets/icon.png
 
 .EXTERNALMODULEDEPENDENCIES 
 
