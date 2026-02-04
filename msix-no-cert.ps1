@@ -1,3 +1,46 @@
+
+<#PSScriptInfo
+
+.VERSION 2.2.2
+
+.GUID 6203fa0c-b23c-454e-9aff-8bbbebc4b570
+
+.AUTHOR phorb
+
+.COMPANYNAME
+
+.COPYRIGHT
+
+.TAGS PSEdition_Core PSEdition_Desktop Windows
+
+.LICENSEURI https://github.com/iqnite/msix-no-cert/blob/main/LICENSE
+
+.PROJECTURI https://github.com/iqnite/msix-no-cert/
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS
+
+.EXTERNALSCRIPTDEPENDENCIES
+
+.RELEASENOTES
+
+
+.PRIVATEDATA
+
+#>
+
+#Requires -Module ps2exe
+
+<# 
+
+.DESCRIPTION 
+ A utility that allows creating installers for MSIX files with a self-signed certificate. 
+
+#> 
+
 [CmdletBinding(PositionalBinding = $false)]
 param (
     [Parameter(ValueFromRemainingArguments = $true)][string[]]$inputFiles,
@@ -16,7 +59,7 @@ $ErrorActionPreference = "Stop"
 Write-Host "Self-signed MSIX Package Creation Tool" -ForegroundColor Cyan
 Write-Host "Version 2.2.0" -ForegroundColor Cyan
 
-$scriptName = ".\msix-no-cert.exe"
+$scriptName = "msix-no-cert"
 
 if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     Write-Host "Usage: $scriptName <installer.msix installer.appinstaller ...> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]" -ForegroundColor Yellow
@@ -36,20 +79,7 @@ if ($help -or (-not $output -or $inputFiles.count -lt 1) -and -not $config) {
     exit
 }
 
-try {
-    Import-Module -Name ps2exe
-}
-catch {
-    try {
-        Import-Module -Name PowerShellGet -Force -ErrorAction SilentlyContinue
-        Install-Module -Name ps2exe -Scope CurrentUser -Force -RequiredVersion 1.0.17
-    }
-    catch {
-        Write-Host "PS2EXE is not installed. Please run this program as an administrator or install PS2EXE with the following command:" -ForegroundColor Red
-        Write-Host "Install-Module -Name ps2exe -Scope CurrentUser -Force -RequiredVersion 1.0.17" -ForegroundColor Red
-        exit
-    }
-}
+Import-Module -Name ps2exe
 
 if ($config) {
     $configObj = Get-Content -Path $config -Raw | ConvertFrom-Json
@@ -101,3 +131,4 @@ for ($i = 0; $i -lt $configObj.input.count; $i++) {
 }
 
 Write-Host "$($configObj.input.count) installers created." -ForegroundColor Green
+
