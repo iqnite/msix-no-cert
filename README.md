@@ -19,7 +19,7 @@ This tool utilizes PS2EXE by Markus Scholtes to convert PowerShell scripts into 
 To create an installer, run a command in the following format:
 
 ```powershell
-.\msix-no-cert.exe <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
+msix-no-cert <installers> [-o <output folder>] [-c <certificate.cer>] [-t <title>] [-d <description>] [-i <icon.ico>] [-v <version>]
 ```
 
 Options:
@@ -36,7 +36,7 @@ Options:
 Example:
 
 ```powershell
-.\msix-no-cert.exe installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my-app-icon.ico -v '1.0.0'
+msix-no-cert installer.msix installer.appinstaller -o output -c certificate.cer -t 'My Cool App Installer' -d 'Installs My Cool App, an app that does something.' -i my-app-icon.ico -v '1.0.0'
 ```
 
 ### JSON Options
@@ -58,7 +58,7 @@ You can create a JSON configuration file with the command options, so you don't 
 You can then use the following command to create the installer, based on your JSON file:
 
 ```powershell
-.\msix-no-cert.exe -config <path-to-json-file.json>
+msix-no-cert -config <path-to-json-file.json>
 ```
 
 ## Troubleshooting
