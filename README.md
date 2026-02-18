@@ -14,6 +14,14 @@ If you decide to use this tool, be aware that some antivirus software, such as W
 
 This tool utilizes PS2EXE by Markus Scholtes to convert PowerShell scripts into executable files. For more information, visit the [PS2EXE GitHub repository](https://github.com/MScholtes/PS2EXE).
 
+## Installation
+
+The tool is available on the [PowerShell Gallery](https://www.powershellgallery.com/packages/msix-no-cert). It can be installed with the following command:
+
+```powershell
+Install-Script -Name msix-no-cert
+```
+
 ## Usage
 
 To create an installer, run a command in the following format:
