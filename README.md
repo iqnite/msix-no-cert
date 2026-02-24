@@ -73,8 +73,9 @@ msix-no-cert -config <path-to-json-file.json>
 
 If any errors occur during the installer creation, ensure that:
 
+- the [script execution policy](https:/go.microsoft.com/fwlink/?LinkID=135170) allows running scripts
 - PS2EXE is installed
+- you have passed all parameters correctly
 - all relative paths are correct
-- you have passed the `-cert`, `-output`, and installer parameters correctly
 - the certificate is in `.cer` format
 - the app icon has the `.ico` file extension
