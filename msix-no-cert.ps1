@@ -97,8 +97,16 @@ else {
 }
 
 $embeddedInstallScript = @'
-$certPath = Join-Path $env:TEMP "msix-no-cert.certificate.cer"
-$installerPath = Get-ChildItem -Path $env:TEMP -Filter msix-no-cert.installer.* | Select-Object -First 1 -ExpandProperty FullName
+if ($MyInvocation.MyCommand.CommandType -eq "ExternalScript") {
+    $scriptRoot = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+}
+else {
+    $scriptRoot = Split-Path -Parent -Path ([Environment]::GetCommandLineArgs()[0])
+    if (-not $scriptRoot) { $scriptRoot = "." }
+}
+
+$certPath = Join-Path $scriptRoot "msix-no-cert.certificate.cer"
+$installerPath = Get-ChildItem -Path $scriptRoot -Filter "msix-no-cert.installer.*" | Select-Object -First 1 -ExpandProperty FullName
 
 if (Test-Path $certPath) {
     $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($certPath)
@@ -124,7 +132,7 @@ for ($i = 0; $i -lt $configObj.input.count; $i++) {
         -title $configObj.title `
         -description $configObj.description `
         -version $configObj.version `
-        -embedFiles @{"%TEMP%\msix-no-cert.certificate.cer" = $configObj.cert; "%TEMP%\msix-no-cert.installer$extension" = $configObj.input[$i] } `
+        -embedFiles @{".\msix-no-cert.certificate.cer" = $configObj.cert; ".\msix-no-cert.installer$extension" = $configObj.input[$i] } `
         -NoConsole `
         -RequireAdmin `
         -verbose
